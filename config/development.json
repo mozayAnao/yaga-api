@@ -1,0 +1,5 @@
+{
+    "name": "Yaga-Api-Development",
+    "dbConnectionString": "mongodb://localhost/yaga-api",
+     "jwtPrivateKey": ""
+}
