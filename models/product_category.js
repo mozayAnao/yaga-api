@@ -1,60 +1,41 @@
 const mongoose = require('mongoose');
 const Joi = require('joi');
 
-const Product = mongoose.model(
-  'Product',
+const Category = mongoose.model(
+  'Category',
   new mongoose.Schema({
     name: {
       type: String,
+      min: 3,
+      max: 50,
       required: true,
-      minlength: 3,
-      maxlength: 20,
     },
     slug: {
       type: String,
       required: true,
       minlength: 3,
-      maxlength: 20,
+      maxlength: 50,
       unique: true,
     },
     description: {
       type: String,
-      min: 5,
-      max: 1024,
-      required: true,
+      min: 10,
+      max: 255,
     },
-    photo: {
+    serviceId: {
       type: String,
       required: true,
     },
-    vendorId: {
-      type: String,
-      required: true,
-    },
-    stock: {
-      type: Number,
-      required: true,
-    },
-    reviews: [
-      {
-        review: String,
-        date: {
-          type: Date,
-          Default: Date.now,
-        },
-      },
-    ],
-    ratings: [Number],
   })
 );
 
-const validateProduct = async (req, res, next) => {
+const validateCategory = async (req, res, next) => {
   const data = req.body;
 
   const schema = Joi.object().keys({
     name: Joi.string()
       .min(3)
-      .max(20)
+      .max(50)
       .required()
       .error((errors) => {
         errors.forEach((err) => {
@@ -77,7 +58,7 @@ const validateProduct = async (req, res, next) => {
 
     slug: Joi.string()
       .min(3)
-      .max(20)
+      .max(50)
       .required()
       .error((errors) => {
         errors.forEach((err) => {
@@ -99,7 +80,7 @@ const validateProduct = async (req, res, next) => {
       }),
 
     description: Joi.string()
-      .min(3)
+      .min(10)
       .max(255)
       .required()
       .error((errors) => {
@@ -121,18 +102,7 @@ const validateProduct = async (req, res, next) => {
         return errors;
       }),
 
-    photo: Joi.string().required(),
-
-    vendorId: Joi.string().required(),
-
-    stock: Joi.number().required(),
-
-    reviews: Joi.array({
-      review: Joi.string(),
-      date: Joi.date().default(Date.now),
-    }),
-
-    ratings: Joi.array(Joi.number()),
+    serviceId: Joi.string().required(),
   });
 
   try {
@@ -145,5 +115,5 @@ const validateProduct = async (req, res, next) => {
   }
 };
 
-exports.Product = Product;
-exports.validateProduct = validateProduct;
+module.validateCategory = validateCategory;
+module.Category = Category;

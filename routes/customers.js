@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-const Joi = require('joi');
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
 const auth = require('../middleware/auth');
@@ -9,24 +8,9 @@ const { Customer, validateCustomer } = require('../models/customer');
 
 /* GET users listing. */
 router.get('/', [auth, admin], async (req, res) => {
-  const customers = await Customer.find();
+  const customers = await Customer.find().select('-password');
 
-  let result = [];
-
-  customers.forEach((customer) => {
-    result.push(
-      _.pick(customer, [
-        '_id',
-        'fname',
-        'lname',
-        'email',
-        'verifiedEmail',
-        'phone',
-      ])
-    );
-  });
-
-  res.send(result);
+  res.send(customers);
 });
 
 router.get('/me', auth, async (req, res) => {

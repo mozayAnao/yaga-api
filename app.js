@@ -1,10 +1,10 @@
-var createError = require('http-errors');
-var express = require('express');
+require('express-async-errors');
+const express = require('express');
 const helmet = require('helmet');
 const morgan = require('morgan');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const config = require('config');
 const mongoose = require('mongoose');
 
@@ -24,6 +24,8 @@ const authRouter = require('./routes/auth');
 const customerRouter = require('./routes/customers');
 const serviceRouter = require('./routes/services');
 const vendorRouter = require('./routes/vendors');
+const productRouter = require('./routes/products');
+const error = require('./middleware/error');
 
 var app = express();
 app.use(helmet());
@@ -45,21 +47,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/customers', customerRouter);
 app.use('/api/services', serviceRouter);
 app.use('/api/vendors', vendorRouter);
-
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  next(createError(404));
-});
-
-// error handler
-app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+app.use('/api/products', productRouter);
+app.use(error);
 
 module.exports = app;

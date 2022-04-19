@@ -1,12 +1,9 @@
 var express = require('express');
 var router = express.Router();
-const _ = require('lodash');
-const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const validateAuth = require('../middleware/validator');
 const { User } = require('../models/user');
 const { Customer } = require('../models/customer');
-const config = require('config');
 
 router.post('/admin', validateAuth, async (req, res) => {
   let user = await User.findOne({ email: req.body.email });
