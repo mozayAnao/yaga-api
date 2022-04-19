@@ -31,6 +31,10 @@ const Order = mongoose.model(
       type: String,
       required: true,
     },
+    courierId: {
+      type: String,
+      required: true,
+    },
   })
 );
 
