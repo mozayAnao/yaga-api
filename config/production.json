@@ -1,5 +1,4 @@
 {
     "name": "Yaga-Api-Production",
-    "dbConnectionString": "",
-     "jwtPrivateKey": ""
+   "dbConnectionString-Prod": ""
 }

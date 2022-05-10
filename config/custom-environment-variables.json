@@ -1,3 +1,4 @@
 {
-    "jwtPrivateKey": "yaga_jwtPrivateKey"
+    "jwtPrivateKey": "yaga_jwtPrivateKey",
+     "dbConnectionString-Prod": "bold_dbConnectionString"
 }

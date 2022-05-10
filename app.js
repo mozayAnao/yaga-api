@@ -13,10 +13,23 @@ if (!config.get('jwtPrivateKey')) {
   process.exit(1);
 }
 
+const environment = app.get('env');
+console.log(environment);
+
+let dbConnectionString = '';
+
+if (environment === 'development') {
+  dbConnectionString = config.get('dbConnectionString');
+  console.log(dbConnectionString);
+} else {
+  dbConnectionString = config.get('dbConnectionString-Prod');
+  console.log(dbConnectionString);
+}
+
 mongoose
-  .connect(config.get('dbConnectionString'))
+  .connect(dbConnectionString)
   .then(() => console.log('Connected to MongoDB...'))
-  .catch((err) => console.error('Could not connect to MongoDB'));
+  .catch((err) => console.error('Could not connect to MongoDB', err));
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
