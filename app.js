@@ -8,6 +8,8 @@ const logger = require('morgan');
 const config = require('config');
 const mongoose = require('mongoose');
 
+var app = express();
+
 if (!config.get('jwtPrivateKey')) {
   console.error('FATAL ERROR: jwtPrivateKey is not defined');
   process.exit(1);
@@ -40,7 +42,6 @@ const vendorRouter = require('./routes/vendors');
 const productRouter = require('./routes/products');
 const error = require('./middleware/error');
 
-var app = express();
 app.use(helmet());
 app.use(morgan('tiny'));
 
